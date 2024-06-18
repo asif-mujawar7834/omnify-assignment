@@ -37,6 +37,7 @@ const defaultState = {
   currentPage: 1,
   totalPages: 1,
   totalRecords: 0,
+  newRecords: 0,
   limit: 10,
   leadTotalRecords: 0,
 };
@@ -46,20 +47,6 @@ const FILTER_TYPES = {
   BY_FIRST_NAME: "byfirstname",
   BY_SERVICE_NAME: "byservicename",
 };
-
-const FILTER_BUTTONS = [
-  {
-    type: FILTER_TYPES.BY_DATE_RANGE,
-    label: "Scheduled Date",
-    icon: FaCalendar,
-  },
-  { type: FILTER_TYPES.BY_FIRST_NAME, label: "People", icon: FaPeopleGroup },
-  {
-    type: FILTER_TYPES.BY_SERVICE_NAME,
-    label: "Services / Products",
-    icon: AiOutlineAppstore,
-  },
-];
 
 export const FilterPopover = ({
   isTableFiltered,

@@ -14,6 +14,7 @@ const defaultState = {
   totalPages: 1,
   totalRecords: 0,
   limit: 10,
+  newRecords: 0,
   leadTotalRecords: 0,
 };
 
@@ -64,8 +65,8 @@ export default function WaitList() {
     {
       id: 2,
       name: "Newly Added",
-      value: "",
-      count: waitlist?.totalRecords,
+      value: "newlyadded",
+      count: waitlist?.newRecords,
     },
     {
       id: 3,
@@ -78,8 +79,6 @@ export default function WaitList() {
   const tableHeaders = headers.filter((header) =>
     visibleHeaders.includes(header.id)
   );
-
-  console.log("Limit => ", limit);
 
   return (
     <div className="text-[#2c333f] font-medium">
@@ -94,9 +93,12 @@ export default function WaitList() {
               setStatus(button.value);
             }}
             key={button.id}
-            className={`text-left cursor-pointer flex-shrink-0 py-2 px-3 border ${
+            className={`text-left flex-shrink-0 py-2 px-3 border ${
               button.value === status ? "border-[#64748B]" : "border-[#E2E8F0]"
+            } ${
+              button.count === 0 ? "cursor-not-allowed" : ""
             } text-xs rounded-md font-semibold sm:min-w-[358px]`}
+            disabled={button.count === 0}
           >
             {button.name}
             <span className="text-[10px] text-[#64748B] font-medium ml-2">

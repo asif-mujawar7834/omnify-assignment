@@ -14,6 +14,14 @@ export async function GET(request: Request) {
   const endIndex = page * limit;
 
   let data = dummyData;
+
+  const now = new Date();
+  const last24Hours = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const newRecords = data.filter((d) => {
+    const createdOnDate = new Date(d.createdOn);
+    return createdOnDate >= last24Hours && createdOnDate <= now;
+  });
+
   switch (status) {
     case "all":
       break;
@@ -29,6 +37,10 @@ export async function GET(request: Request) {
         const createdOnDate = new Date(d.createdOn);
         return createdOnDate >= sDate && createdOnDate <= eDate;
       });
+      break;
+
+    case "newlyadded":
+      data = newRecords;
       break;
 
     case "byfirstname":
@@ -56,6 +68,7 @@ export async function GET(request: Request) {
       currentPage: page,
       totalPages: Math.ceil(data.length / limit),
       totalRecords: dummyData.length,
+      newRecords: newRecords.length,
       limit,
       leadTotalRecords: dummyData.filter((data) => data.status === "lead")
         .length,

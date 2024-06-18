@@ -23,6 +23,7 @@ interface waitListAPIResponse {
   totalRecords: number;
   limit: number;
   leadTotalRecords: number;
+  newRecords: number;
 }
 
 interface tableHeader {
@@ -39,6 +40,7 @@ interface tableDataProps {
     currentPage: number;
     totalPages: number;
     totalRecords: number;
+    newRecords: number;
     limit: number;
   };
   headers: tableHeader[];
