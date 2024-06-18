@@ -17,8 +17,11 @@ export async function GET(request: Request) {
 
   const now = new Date();
   const last24Hours = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const normalizeDate = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  };
   const newRecords = data.filter((d) => {
-    const createdOnDate = new Date(d.createdOn);
+    const createdOnDate = normalizeDate(new Date(d.createdOn));
     return createdOnDate >= last24Hours && createdOnDate <= now;
   });
 
@@ -31,10 +34,10 @@ export async function GET(request: Request) {
       break;
 
     case "bydaterange":
-      const sDate = new Date(startDateString as string);
-      const eDate = new Date(endDateString as string);
+      const sDate = normalizeDate(new Date(startDateString as string));
+      const eDate = normalizeDate(new Date(endDateString as string));
       data = data.filter((d) => {
-        const createdOnDate = new Date(d.createdOn);
+        const createdOnDate = normalizeDate(new Date(d.createdOn));
         return createdOnDate >= sDate && createdOnDate <= eDate;
       });
       break;
