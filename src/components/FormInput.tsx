@@ -1,4 +1,4 @@
-import { Asterisk } from "lucide-react";
+import { ReactNode } from "react";
 import {
   FormControl,
   FormField,
@@ -17,6 +17,7 @@ interface FormInputProps {
   type: string;
   disabled?: boolean;
   required?: boolean;
+  icon?: ReactNode;
 }
 
 export default function FormInput({
@@ -28,6 +29,7 @@ export default function FormInput({
   type,
   disabled,
   required = false,
+  icon,
 }: FormInputProps) {
   return (
     <FormField
@@ -44,12 +46,11 @@ export default function FormInput({
               type={type}
               placeholder={placeholder}
               {...field}
-              className={
-                error
-                  ? "outline outline-1 outline-red-500"
-                  : "outline outline-1 outline-gray-700"
-              }
+              className={`py-1 ${icon ? "pl-8 pr-3" : "px-3"} ${
+                error ? "outline outline-1 outline-red-500" : ""
+              } bg-[#F8FAFC]`}
               disabled={disabled}
+              icon={icon}
             />
           </FormControl>
           {error && <FormMessage>{error}</FormMessage>}
