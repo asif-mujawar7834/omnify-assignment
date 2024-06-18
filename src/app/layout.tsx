@@ -166,7 +166,7 @@ export default function RootLayout({
                     name="Calendar"
                     isCollapsed={isSidebarCollapsed}
                     closeSidebar={closeSidebar}
-                    href="/"
+                    href="/calendar"
                   />
                   <SidebarItem
                     icon={<CgSandClock />}
