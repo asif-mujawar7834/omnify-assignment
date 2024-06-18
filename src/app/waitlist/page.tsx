@@ -6,6 +6,7 @@ import { FilterPopover } from "@/components/FilterPopover";
 import { ManageColumnPopover } from "@/components/ManageColumnPopover";
 import { headers } from "@/data/tableHeaders";
 import { BsArrowRepeat } from "react-icons/bs";
+import { MdOutlineFileDownload } from "react-icons/md";
 
 const defaultState = {
   success: false,
@@ -118,7 +119,7 @@ export default function WaitList() {
           setDateRange={setDateRange}
           setPage={setPage}
         />
-        <div className="flex gap-4">
+        <div className="flex gap-6">
           <button
             className="cp"
             onClick={() => {
@@ -130,6 +131,9 @@ export default function WaitList() {
             <BsArrowRepeat />
           </button>
           <ManageColumnPopover setVisibleHeaders={setVisibleHeaders} />
+          <button>
+            <MdOutlineFileDownload />
+          </button>
         </div>
       </div>
       {waitlist?.data?.length > 0 ? (
