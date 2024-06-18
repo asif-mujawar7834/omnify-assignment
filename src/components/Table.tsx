@@ -1,4 +1,3 @@
-// components/Table.js
 import React from "react";
 import {
   FaAngleDown,
@@ -121,97 +120,97 @@ export const Table = ({ data, setPage, setLimit, headers }: tableDataProps) => {
             })}
           </tbody>
         </table>
-        <div className="w-full flex flex-col md:flex-row md:justify-between items-center py-3 px-4 mt-2">
-          <div className="text-sm flex items-center gap-3 mb-3 md:mb-0">
-            <span className="text-[#64748B]">Displaying</span>
-            <div className="bg-[#F8FAFC] flex items-center gap-2">
-              {data?.data?.length}
-              <div className="flex flex-col gap-1">
-                <button
-                  className="text-[8px]"
-                  disabled={data?.data?.length <= 5}
-                  onClick={() => {
-                    setLimit(data?.limit - 5);
-                  }}
-                >
-                  <FaAngleUp />
-                </button>
-                <button
-                  className="text-[8px]"
-                  onClick={() => {
-                    setLimit(data?.limit + 5);
-                  }}
-                  disabled={
-                    data?.currentPage === data?.totalPages || data?.limit === 25
-                  }
-                >
-                  <FaAngleDown />
-                </button>
-              </div>
+      </div>
+      <div className="w-full flex flex-col md:flex-row md:justify-between items-center py-3 px-4 mt-2">
+        <div className="text-sm flex items-center gap-3 mb-3 md:mb-0">
+          <span className="text-[#64748B]">Displaying</span>
+          <div className="bg-[#F8FAFC] flex items-center gap-2">
+            {data?.data?.length}
+            <div className="flex flex-col gap-1">
+              <button
+                className="text-[8px]"
+                disabled={data?.data?.length <= 5}
+                onClick={() => {
+                  setLimit(data?.limit - 5);
+                }}
+              >
+                <FaAngleUp />
+              </button>
+              <button
+                className="text-[8px]"
+                onClick={() => {
+                  setLimit(data?.limit + 5);
+                }}
+                disabled={
+                  data?.currentPage === data?.totalPages || data?.limit === 25
+                }
+              >
+                <FaAngleDown />
+              </button>
             </div>
-            <span className="text-[#64748B]">
-              Out of{" "}
-              <span className="font-medium text-[#18181B]">
-                {data?.totalRecords}
-              </span>
+          </div>
+          <span className="text-[#64748B]">
+            Out of{" "}
+            <span className="font-medium text-[#18181B]">
+              {data?.totalRecords}
             </span>
-          </div>
-          <div className="flex items-center flex-wrap">
-            <nav aria-label="Page navigation">
-              <ul className="inline-flex items-center text-xs text-[#334155] font-medium">
-                <li>
-                  <button
-                    className={`flex items-center gap-2 py-1 px-3 transition-colors duration-150 rounded-l-lg focus:shadow-outline hover:bg-slate-100 ${
-                      data?.currentPage === 1
-                        ? "cursor-not-allowed"
-                        : "cursor-pointer"
-                    }`}
-                    disabled={data?.currentPage === 1}
-                    onClick={() => {
-                      setPage(Number(data?.currentPage) - 1);
-                    }}
-                  >
-                    <FaAngleLeft className="w-4 h-4" />
-                    Previous
-                  </button>
+          </span>
+        </div>
+        <div className="flex items-center flex-wrap">
+          <nav aria-label="Page navigation">
+            <ul className="inline-flex items-center text-xs text-[#334155] font-medium">
+              <li>
+                <button
+                  className={`flex items-center gap-2 py-1 px-3 transition-colors duration-150 rounded-l-lg focus:shadow-outline hover:bg-slate-100 ${
+                    data?.currentPage === 1
+                      ? "cursor-not-allowed"
+                      : "cursor-pointer"
+                  }`}
+                  disabled={data?.currentPage === 1}
+                  onClick={() => {
+                    setPage(Number(data?.currentPage) - 1);
+                  }}
+                >
+                  <FaAngleLeft className="w-4 h-4" />
+                  Previous
+                </button>
+              </li>
+              {renderPageNumbers().map((page, index) => (
+                <li key={index}>
+                  {page === "..." ? (
+                    <span className="py-1 px-3 text-black">...</span>
+                  ) : (
+                    <button
+                      className={`py-1 px-3 text-black transition-colors duration-150 focus:shadow-outline ${
+                        data?.currentPage === page
+                          ? "border border-[#E2E8F0]"
+                          : ""
+                      }`}
+                      onClick={() => setPage(page)}
+                    >
+                      {page}
+                    </button>
+                  )}
                 </li>
-                {renderPageNumbers().map((page, index) => (
-                  <li key={index}>
-                    {page === "..." ? (
-                      <span className="py-1 px-3 text-black">...</span>
-                    ) : (
-                      <button
-                        className={`py-1 px-3 text-black transition-colors duration-150 focus:shadow-outline ${
-                          data?.currentPage === page
-                            ? "border border-[#E2E8F0]"
-                            : ""
-                        }`}
-                        onClick={() => setPage(page)}
-                      >
-                        {page}
-                      </button>
-                    )}
-                  </li>
-                ))}
-                <li>
-                  <button
-                    onClick={() => {
-                      setPage(Number(data?.currentPage) + 1);
-                    }}
-                    disabled={data?.currentPage === data?.totalPages}
-                    className={`flex items-center gap-2 py-1 px-3 transition-colors duration-150 rounded-r-lg focus:shadow-outline hover:bg-slate-200 ${
-                      data?.currentPage === data?.totalPages
-                        ? "cursor-not-allowed"
-                        : "cursor-pointer"
-                    }`}
-                  >
-                    Next
-                    <FaAngleRight className="w-4 h-4" />
-                  </button>
-                </li>
-              </ul>
-            </nav>
-          </div>
+              ))}
+              <li>
+                <button
+                  onClick={() => {
+                    setPage(Number(data?.currentPage) + 1);
+                  }}
+                  disabled={data?.currentPage === data?.totalPages}
+                  className={`flex items-center gap-2 py-1 px-3 transition-colors duration-150 rounded-r-lg focus:shadow-outline hover:bg-slate-200 ${
+                    data?.currentPage === data?.totalPages
+                      ? "cursor-not-allowed"
+                      : "cursor-pointer"
+                  }`}
+                >
+                  Next
+                  <FaAngleRight className="w-4 h-4" />
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
