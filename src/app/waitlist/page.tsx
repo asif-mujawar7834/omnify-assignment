@@ -132,7 +132,7 @@ export default function WaitList() {
           <ManageColumnPopover setVisibleHeaders={setVisibleHeaders} />
         </div>
       </div>
-      {waitlist.data.length > 0 ? (
+      {waitlist?.data?.length > 0 ? (
         <div className="mt-2">
           <Table
             data={waitlist}

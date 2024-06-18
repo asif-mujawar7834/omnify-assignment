@@ -70,12 +70,12 @@ export async function GET(request: Request) {
         success: true,
         data: pagiNatedData,
         currentPage: page,
-        totalPages: Math.ceil(data.length / limit),
-        totalRecords: dummyData.length,
-        newRecords: newRecords.length,
+        totalPages: Math.ceil(data?.length / limit),
+        totalRecords: dummyData?.length,
+        newRecords: newRecords?.length,
         limit,
         leadTotalRecords: dummyData.filter((data) => data.status === "lead")
-          .length,
+          ?.length,
       },
       { status: 200 }
     );

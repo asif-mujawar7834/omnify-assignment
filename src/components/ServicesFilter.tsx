@@ -51,7 +51,7 @@ export const ServicesFilter = ({
       <div>
         {debouncedValue && (
           <label className="text-[#0F172A] text-xs my-2 block">
-            Showing {filteredData.data.length} results for matching{" "}
+            Showing {filteredData?.data?.length} results for matching{" "}
             {<span>‘{debouncedValue}’</span>}
           </label>
         )}

@@ -110,7 +110,7 @@ export const FilterPopover = ({
     const d = waitlist.data;
     const filtered = d.filter((item) => item.id !== id);
 
-    if (filtered.length === 0) {
+    if (filtered?.length === 0) {
       fetchWaitList();
       setIsTableFiltered(false);
       setStatus("all");
@@ -284,10 +284,10 @@ export const FilterPopover = ({
                         Reset To Default
                       </button>
                       <button
-                        disabled={Object.keys(errors).length > 0}
+                        disabled={Object.keys(errors)?.length > 0}
                         type="submit"
                         className={`rounded-md text-sm bg-[#0F172A] text-[#FFFFFF] py-1 px-3 border border-[#E2E8F0] ${
-                          Object.keys(errors).length > 0
+                          Object.keys(errors)?.length > 0
                             ? "bg-slate-400 cursor-not-allowed"
                             : "cursor-pointer"
                         }`}
