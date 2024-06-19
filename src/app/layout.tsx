@@ -214,10 +214,10 @@ export default function RootLayout({
                       className={`${isSidebarCollapsed ? "hidden" : "block"}`}
                     >
                       <h4 className="text-xs text-[#0F172A] font-medium">
-                        Asif Mujawar
+                        Admin Name
                       </h4>
                       <span className="text-xs text-[#64748B] font-normal">
-                        asif@gmail.com
+                        admin@gmail.com
                       </span>
                     </div>
                   </div>
