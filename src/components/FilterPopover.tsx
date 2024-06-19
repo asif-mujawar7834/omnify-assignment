@@ -88,7 +88,7 @@ export const FilterPopover = ({
     defaultValues: {
       selectedPeople: [],
       selectedServices: [],
-      serviceFilterType: "bytags",
+      serviceFilterType: "byname",
     },
   });
 

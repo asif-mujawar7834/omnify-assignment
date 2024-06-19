@@ -7,7 +7,7 @@ export const scheduleDateFilterSchema = z.object({
 
 export const peopleFilterSchema = z.object({
   searchTerm: z
-    .string({ required_error: "at least 2 alphabets required" })
+    .string({ required_error: "at least 1 alphabets required" })
     .min(1, "Search input is required"),
   selectedPeople: z
     .array(z.string(), {
@@ -22,7 +22,7 @@ export const peopleFilterSchema = z.object({
 export const serviceFilterSchema = z.object({
   serviceFilterType: z.string(),
   serviceSearchTerm: z
-    .string({ required_error: "at least 2 alphabets required" })
+    .string({ required_error: "at least 1 alphabet required" })
     .min(1, "Search input is required"),
   selectedServices: z
     .array(z.string(), {

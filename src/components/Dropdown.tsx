@@ -44,10 +44,10 @@ const Dropdown = ({ items, label, selected = null }: DropDownProps) => {
       )}
       <button
         onClick={toggleDropdown}
-        className="w-full bg-white flex justify-between text-[#334155] text-sm font-medium border border-gray-300 rounded-md shadow-sm px-3 py-2 text-left cursor-pointer focus:outline focus:outline-[#64748B]"
+        className="w-full bg-white flex items-center justify-between text-[#334155] text-sm font-medium border border-gray-300 rounded-md shadow-sm px-3 py-2 text-left cursor-pointer focus:outline focus:outline-[#64748B]"
       >
         {selectedItem ? selectedItem : label}
-        {isOpen ? <FaAngleDown /> : <FaAngleUp />}
+        {isOpen ? <FaAngleUp /> : <FaAngleDown />}
       </button>
 
       {isOpen && (
