@@ -9,7 +9,6 @@ import { AiOutlineAppstore } from "react-icons/ai";
 import { Form } from "./ui/form";
 import { z } from "zod";
 import {
-  FilterSchema,
   peopleFilterSchema,
   scheduleDateFilterSchema,
   serviceFilterSchema,
@@ -89,6 +88,7 @@ export const FilterPopover = ({
     defaultValues: {
       selectedPeople: [],
       selectedServices: [],
+      serviceFilterType: "bytags",
     },
   });
 

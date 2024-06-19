@@ -3,6 +3,8 @@ import FormInput from "./FormInput";
 import { FormMessage } from "./ui/form";
 import { waitListAPIResponse } from "../../types";
 import { FaSearch } from "react-icons/fa";
+import Dropdown from "./Dropdown";
+import { serviceStatus, serviceTypes } from "@/data/DropdownData";
 
 export const ServicesFilter = ({
   filteredData,
@@ -29,15 +31,18 @@ export const ServicesFilter = ({
       bg,
     };
   };
-  const { register, watch } = useFormContext();
-  const selectedServices = watch("selectedServices") || [];
 
   const {
     control,
     formState: { errors },
+    register,
+    watch,
   } = useFormContext();
+  const selectedServices = watch("selectedServices") || [];
 
-  return (
+  const serviceFilterType = watch("serviceFilterType");
+
+  const filterByName = (
     <div>
       <FormInput
         placeholder="Search Service Name"
@@ -92,6 +97,48 @@ export const ServicesFilter = ({
           </FormMessage>
         )}
       </div>
+    </div>
+  );
+
+  const filterByTags = (
+    <div className="flex flex-col gap-4">
+      <Dropdown
+        label="Service Type"
+        items={serviceTypes}
+        selected={"Show All Service Types"}
+      />
+      <Dropdown label="Status" items={serviceStatus} selected={"Show All"} />
+      <p className="text-yellow-500 text-xs">
+        This feature is work in progress.
+      </p>
+    </div>
+  );
+
+  return (
+    <div>
+      <div className="flex items-center gap-4 mb-6 text-[#334155] text-sm">
+        <label className="flex items-center gap-2 w-full">
+          <input
+            type="radio"
+            value="byname"
+            {...register("serviceFilterType")}
+            checked={serviceFilterType === "byname"}
+            className="accent-black cursor-pointer"
+          />
+          Search by name
+        </label>
+        <label className="flex items-center gap-2 w-full">
+          <input
+            type="radio"
+            value="bytags"
+            {...register("serviceFilterType")}
+            checked={serviceFilterType === "bytags"}
+            className="accent-black  cursor-pointer"
+          />
+          Search by tags
+        </label>
+      </div>
+      {serviceFilterType === "byname" ? filterByName : filterByTags}
     </div>
   );
 };

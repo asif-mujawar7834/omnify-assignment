@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { DropDownProps } from "../../types";
-import { FaCheck } from "react-icons/fa";
+import { FaAngleDown, FaAngleUp, FaCheck } from "react-icons/fa";
 
 const Dropdown = ({ items, label, selected = null }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,9 +44,10 @@ const Dropdown = ({ items, label, selected = null }: DropDownProps) => {
       )}
       <button
         onClick={toggleDropdown}
-        className="w-full bg-white text-[#334155] text-sm font-medium border border-gray-300 rounded-md shadow-sm px-3 py-2 text-left cursor-pointer focus:outline focus:outline-[#64748B]"
+        className="w-full bg-white flex justify-between text-[#334155] text-sm font-medium border border-gray-300 rounded-md shadow-sm px-3 py-2 text-left cursor-pointer focus:outline focus:outline-[#64748B]"
       >
         {selectedItem ? selectedItem : label}
+        {isOpen ? <FaAngleDown /> : <FaAngleUp />}
       </button>
 
       {isOpen && (
