@@ -183,7 +183,7 @@ export const Table = ({ data, setPage, setLimit, headers }: tableDataProps) => {
                     <button
                       className={`py-1 px-3 text-black transition-colors duration-150 focus:shadow-outline ${
                         data?.currentPage === page
-                          ? "border border-[#E2E8F0]"
+                          ? "border-2 border-[#E2E8F0] rounded-md"
                           : ""
                       }`}
                       onClick={() => setPage(page)}
