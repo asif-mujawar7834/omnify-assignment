@@ -24,6 +24,7 @@ interface waitListAPIResponse {
   limit: number;
   leadTotalRecords: number;
   newRecords: number;
+  allWaitList: number;
 }
 
 interface tableHeader {

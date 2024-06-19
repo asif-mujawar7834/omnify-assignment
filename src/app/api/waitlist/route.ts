@@ -71,7 +71,8 @@ export async function GET(request: Request) {
         data: pagiNatedData,
         currentPage: page,
         totalPages: Math.ceil(data?.length / limit),
-        totalRecords: dummyData?.length,
+        allWaitList: dummyData?.length,
+        totalRecords: data?.length,
         newRecords: newRecords?.length,
         limit,
         leadTotalRecords: dummyData.filter((data) => data.status === "lead")

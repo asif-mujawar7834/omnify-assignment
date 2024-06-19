@@ -17,6 +17,7 @@ const defaultState = {
   limit: 10,
   newRecords: 0,
   leadTotalRecords: 0,
+  allWaitList: 0,
 };
 
 export default function WaitList() {
@@ -61,7 +62,7 @@ export default function WaitList() {
       id: 1,
       name: "All Waitlists",
       value: "all",
-      count: waitlist?.totalRecords,
+      count: waitlist?.allWaitList,
     },
     {
       id: 2,

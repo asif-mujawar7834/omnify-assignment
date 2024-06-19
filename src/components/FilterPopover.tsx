@@ -44,6 +44,7 @@ const defaultState = {
   newRecords: 0,
   limit: 10,
   leadTotalRecords: 0,
+  allWaitList: 0,
 };
 
 const FILTER_TYPES = {
@@ -221,6 +222,7 @@ export const FilterPopover = ({
       currentPage: 1,
       limit: 10,
       totalPages: 1,
+      totalRecords: filteredPeople?.length + filteredServices?.length,
     }));
 
     setIsTableFiltered(true);
