@@ -8,7 +8,12 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { Form } from "./ui/form";
 import { z } from "zod";
-import { FilterSchema } from "@/schemas/FilterSchema";
+import {
+  FilterSchema,
+  peopleFilterSchema,
+  scheduleDateFilterSchema,
+  serviceFilterSchema,
+} from "@/schemas/FilterSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ScheduleDateFilter } from "./ScheduleDateFilter";
 import { PeoplesFilter } from "./PeoplesFilter";
@@ -48,6 +53,26 @@ const FILTER_TYPES = {
   BY_SERVICE_NAME: "byservicename",
 };
 
+type ScheduleDateForm = z.infer<typeof scheduleDateFilterSchema>;
+type PeopleForm = z.infer<typeof peopleFilterSchema>;
+type ServiceForm = z.infer<typeof serviceFilterSchema>;
+
+// Create a union type of all possible form shapes
+type FilterForm = ScheduleDateForm & PeopleForm & ServiceForm;
+
+const getSchemaForContent = (content: string) => {
+  switch (content) {
+    case FILTER_TYPES.BY_DATE_RANGE:
+      return scheduleDateFilterSchema;
+    case FILTER_TYPES.BY_FIRST_NAME:
+      return peopleFilterSchema;
+    case FILTER_TYPES.BY_SERVICE_NAME:
+      return serviceFilterSchema;
+    default:
+      return z.object({});
+  }
+};
+
 export const FilterPopover = ({
   isTableFiltered,
   waitlist,
@@ -58,13 +83,15 @@ export const FilterPopover = ({
   setDateRange,
   setPage,
 }: FilterPopoverProps) => {
-  const methods = useForm<z.infer<typeof FilterSchema>>({
-    resolver: zodResolver(FilterSchema),
+  const [content, setContent] = useState("bydaterange");
+  const methods = useForm<FilterForm>({
+    resolver: zodResolver(getSchemaForContent(content)),
     defaultValues: {
       selectedPeople: [],
       selectedServices: [],
     },
   });
+
   const {
     formState: { errors },
     watch,
@@ -74,7 +101,6 @@ export const FilterPopover = ({
     useState<waitListAPIResponse>(defaultState);
   const [isOpen, setIsOpen] = useState(false);
   const searchTerm = watch("searchTerm");
-  const [content, setContent] = useState("bydaterange");
   const serviceTerm = watch("serviceSearchTerm");
   const { debouncedValue: debouncedSearchTerm } = useDebounce(searchTerm, 500);
   const { debouncedValue: debouncedServiceTerm } = useDebounce(
@@ -153,30 +179,40 @@ export const FilterPopover = ({
     setIsOpen(newState);
   };
 
-  const onSubmit = async (values: z.infer<typeof FilterSchema>) => {
-    if ("startDate" in values && "endDate" in values) {
-      setDateRange({
-        startDate: values.startDate.toString(),
-        endDate: values.endDate.toString(),
-      });
-      setPage(1);
-      setStatus(content);
-      setIsTableFiltered(true);
-      setIsOpen(false);
-      return;
+  const onSubmit = async (values: FilterForm) => {
+    if (content === FILTER_TYPES.BY_DATE_RANGE) {
+      if ("startDate" in values && "endDate" in values) {
+        setDateRange({
+          startDate: values.startDate.toString(),
+          endDate: values.endDate.toString(),
+        });
+        setPage(1);
+        setStatus(content);
+        setIsTableFiltered(true);
+        setIsOpen(false);
+        return;
+      }
     }
+
     const w = filteredWaitList.data;
     let filteredPeople: dataCell[] = [];
-    if ("selectedPeople" in values && values.selectedPeople.length > 0) {
-      filteredPeople = w.filter((item) =>
-        values.selectedPeople.includes(item.id.toString())
-      );
-    }
     let filteredServices: dataCell[] = [];
-    if ("selectedServices" in values && values.selectedServices.length > 0) {
-      filteredServices = w.filter((item) =>
-        values.selectedServices.includes(item.id.toString())
-      );
+
+    if (content === FILTER_TYPES.BY_FIRST_NAME) {
+      if ("selectedPeople" in values && Array.isArray(values.selectedPeople)) {
+        filteredPeople = w.filter((item) =>
+          values.selectedPeople.includes(item.id.toString())
+        );
+      }
+    } else if (content === FILTER_TYPES.BY_SERVICE_NAME) {
+      if (
+        "selectedServices" in values &&
+        Array.isArray(values.selectedServices)
+      ) {
+        filteredServices = w.filter((item) =>
+          values.selectedServices.includes(item.id.toString())
+        );
+      }
     }
 
     setWaitList((data) => ({
@@ -186,6 +222,7 @@ export const FilterPopover = ({
       limit: 10,
       totalPages: 1,
     }));
+
     setIsTableFiltered(true);
     reset();
     setIsOpen(false);
@@ -217,7 +254,7 @@ export const FilterPopover = ({
         </div>
       </div>
       <PopoverContent className="w-[612px] p-0" side="bottom" align="start">
-        <div className="relative min-h-[400px] grid grid-cols-[230px_1fr] grid-rows-[1fr_auto] h-full">
+        <div className="relative min-h-[400px] max-h-[500px] grid grid-cols-[230px_1fr] grid-rows-[1fr_auto] h-full border border-red-500">
           <div className="bg-[#F8FAFC] w-[230px] p-2">
             <button
               onClick={() => {
@@ -284,8 +321,6 @@ export const FilterPopover = ({
                         Reset To Default
                       </button>
                       <button
-                        disabled={Object.keys(errors)?.length > 0}
-                        type="submit"
                         className={`rounded-md text-sm bg-[#0F172A] text-[#FFFFFF] py-1 px-3 border border-[#E2E8F0] ${
                           Object.keys(errors)?.length > 0
                             ? "bg-slate-400 cursor-not-allowed"

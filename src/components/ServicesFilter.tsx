@@ -86,7 +86,7 @@ export const ServicesFilter = ({
             );
           })}
         </ul>
-        {errors.selectedPeople && (
+        {errors.selectedServices && (
           <FormMessage>
             {errors.selectedServices?.message as string}
           </FormMessage>
