@@ -53,7 +53,7 @@ export default function FormInput({
               icon={icon}
             />
           </FormControl>
-          {error && <FormMessage>{error}</FormMessage>}
+          {error && <FormMessage className="text-xs">{error}</FormMessage>}
         </FormItem>
       )}
     />

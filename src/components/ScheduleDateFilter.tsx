@@ -70,7 +70,7 @@ export const ScheduleDateFilter = () => {
                   />
                 </PopoverContent>
               </Popover>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
@@ -111,7 +111,7 @@ export const ScheduleDateFilter = () => {
                   />
                 </PopoverContent>
               </Popover>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />

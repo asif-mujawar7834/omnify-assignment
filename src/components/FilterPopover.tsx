@@ -254,7 +254,7 @@ export const FilterPopover = ({
         </div>
       </div>
       <PopoverContent className="w-[612px] p-0" side="bottom" align="start">
-        <div className="relative min-h-[400px] max-h-[500px] grid grid-cols-[230px_1fr] grid-rows-[1fr_auto] h-full border border-red-500">
+        <div className="relative min-h-[435px] max-h-[500px] grid grid-cols-[230px_1fr] grid-rows-[1fr_auto] h-full">
           <div className="bg-[#F8FAFC] w-[230px] p-2">
             <button
               onClick={() => {

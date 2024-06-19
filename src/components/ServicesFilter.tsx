@@ -55,12 +55,12 @@ export const ServicesFilter = ({
             {<span>‘{debouncedValue}’</span>}
           </label>
         )}
-        <ul className="flex flex-col gap-2 my-2">
+        <ul className="flex flex-col gap-1 my-2">
           {filteredData?.data?.map((person) => {
             const { text, bg } = statusClass(person.service.status);
             return (
               <li key={person.id}>
-                <div className="text-[#374151] text-sm flex items-center justify-between">
+                <div className="text-[#374151] text-xs flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <input
                       type="checkbox"
@@ -72,11 +72,11 @@ export const ServicesFilter = ({
                     {person.service.name}
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="border-md text-[#334155] py-1 px-2 text-xs font-medium bg-[#F1F5F9]">
+                    <span className="border-md text-[#334155] py-1 px-2 text-[10px] font-medium bg-[#F1F5F9]">
                       {person.service.type}
                     </span>
                     <span
-                      className={`border-md ${bg} ${text} py-1 px-2 text-xs font-medium`}
+                      className={`border-md ${bg} ${text} py-1 px-2 text-[10px] font-medium`}
                     >
                       {person.service.status}
                     </span>
@@ -87,7 +87,7 @@ export const ServicesFilter = ({
           })}
         </ul>
         {errors.selectedServices && (
-          <FormMessage>
+          <FormMessage className="text-xs">
             {errors.selectedServices?.message as string}
           </FormMessage>
         )}

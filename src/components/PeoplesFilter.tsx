@@ -37,10 +37,10 @@ export const PeoplesFilter = ({
             {debouncedValue}
           </label>
         )}
-        <ul className="flex flex-col gap-2 my-2">
+        <ul className="flex flex-col gap-1 my-2">
           {filteredData?.data?.map((person) => (
             <li key={person.id}>
-              <label className="text-[#374151] text-sm flex items-center gap-2">
+              <label className="text-[#374151] text-xs flex items-center gap-2">
                 <input
                   type="checkbox"
                   value={person.id}
@@ -49,7 +49,7 @@ export const PeoplesFilter = ({
                   checked={selectedPeople?.includes(person.id.toString())}
                 />
                 {person.payer}
-                <span className="border-md text-[#334155] py-1 px-2 text-xs font-medium bg-[#F1F5F9]">
+                <span className="border-md text-[#334155] py-1 px-2 text-[10px] font-medium bg-[#F1F5F9]">
                   Payer
                 </span>
               </label>
@@ -57,7 +57,9 @@ export const PeoplesFilter = ({
           ))}
         </ul>
         {errors.selectedPeople && (
-          <FormMessage>{errors.selectedPeople?.message as string}</FormMessage>
+          <FormMessage className="text-xs">
+            {errors.selectedPeople?.message as string}
+          </FormMessage>
         )}
       </div>
     </div>
