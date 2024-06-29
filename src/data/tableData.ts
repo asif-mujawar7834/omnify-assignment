@@ -366,7 +366,7 @@ export const dummyData = [
     status: "active",
     email: "ravi.mehta@example.com",
     payerPhoneNumber: "789-012-3456",
-    service: { name: "Yoga Session", type: "class", status: "private" },
+    service: { name: "Yoga Session", type: "class", status: "public" },
     scheduled: "Sun, 13 Feb 2023 02:00 PM",
   },
   {
@@ -446,7 +446,7 @@ export const dummyData = [
     status: "active",
     email: "ajay.bhatt@example.com",
     payerPhoneNumber: "567-890-1234",
-    service: { name: "Yoga Session", type: "class", status: "private" },
+    service: { name: "Yoga Session", type: "class", status: "public" },
     scheduled: "Mon, 21 Feb 2023 09:00 AM",
   },
   {

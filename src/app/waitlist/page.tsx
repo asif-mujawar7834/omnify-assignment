@@ -33,6 +33,7 @@ export default function WaitList() {
     startDate: "",
     endDate: "",
   });
+  const [services, setServices] = useState<string[]>([]);
 
   const fetchWaitList = async () => {
     try {
@@ -40,8 +41,15 @@ export default function WaitList() {
         dateRange.startDate
       )}&enddate=${new Date(dateRange.endDate)}`;
       const normalURL = `/api/waitlist?status=${status}&page=${page}&size=${limit}`;
+      const urlForServices = `/api/waitlist?status=${status}&page=${page}&size=${limit}&services=${services.join(
+        ","
+      )}`;
       const res = await fetch(
-        status === "bydaterange" ? urlForDateRange : normalURL
+        status === "bydaterange"
+          ? urlForDateRange
+          : status === "byservicename"
+          ? urlForServices
+          : normalURL
       );
       if (!res.ok) {
         throw new Error("Failed to fetch Waitlist");
@@ -55,7 +63,7 @@ export default function WaitList() {
 
   useEffect(() => {
     fetchWaitList();
-  }, [page, limit, status]);
+  }, [page, limit, status, dateRange, services]);
 
   const tableFilterButtons = [
     {
@@ -119,6 +127,7 @@ export default function WaitList() {
           fetchWaitList={fetchWaitList}
           setDateRange={setDateRange}
           setPage={setPage}
+          setServices={setServices}
         />
         <div className="flex gap-6">
           <button

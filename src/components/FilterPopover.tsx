@@ -33,6 +33,7 @@ interface FilterPopoverProps {
     }>
   >;
   setPage: Dispatch<SetStateAction<number>>;
+  setServices: Dispatch<SetStateAction<string[]>>;
 }
 
 const defaultState = {
@@ -50,7 +51,7 @@ const defaultState = {
 const FILTER_TYPES = {
   BY_DATE_RANGE: "bydaterange",
   BY_FIRST_NAME: "byfirstname",
-  BY_SERVICE_NAME: "byservicename",
+  BY_SERVICE_NAME: "services",
 };
 
 type ScheduleDateForm = z.infer<typeof scheduleDateFilterSchema>;
@@ -82,6 +83,7 @@ export const FilterPopover = ({
   fetchWaitList,
   setDateRange,
   setPage,
+  setServices,
 }: FilterPopoverProps) => {
   const [content, setContent] = useState("bydaterange");
   const methods = useForm<FilterForm>({
@@ -127,7 +129,7 @@ export const FilterPopover = ({
     if (debouncedSearchTerm) {
       fetchFilteredData("firstname", debouncedSearchTerm);
     } else if (debouncedServiceTerm) {
-      fetchFilteredData("servicename", debouncedServiceTerm);
+      fetchFilteredData("services", debouncedServiceTerm);
     } else {
       setFilteredWaitList(defaultState);
     }
@@ -163,7 +165,7 @@ export const FilterPopover = ({
             filteredData={filteredWaitList}
           />
         );
-      case "byservicename":
+      case "services":
         return (
           <ServicesFilter
             debouncedValue={debouncedServiceTerm as string}
@@ -204,26 +206,28 @@ export const FilterPopover = ({
         filteredPeople = w.filter((item) =>
           values.selectedPeople.includes(item.id.toString())
         );
+        setWaitList((data) => ({
+          ...data,
+          data: [...filteredPeople],
+          currentPage: 1,
+          limit: 10,
+          totalPages: 1,
+          totalRecords: filteredPeople?.length,
+        }));
       }
     } else if (content === FILTER_TYPES.BY_SERVICE_NAME) {
       if (
         "selectedServices" in values &&
         Array.isArray(values.selectedServices)
       ) {
-        filteredServices = w.filter((item) =>
-          values.selectedServices.includes(item.id.toString())
-        );
+        setPage(1);
+        setStatus("byservicename");
+        setServices(values.selectedServices);
+        setIsTableFiltered(true);
+        setIsOpen(false);
+        return;
       }
     }
-
-    setWaitList((data) => ({
-      ...data,
-      data: [...filteredPeople, ...filteredServices],
-      currentPage: 1,
-      limit: 10,
-      totalPages: 1,
-      totalRecords: filteredPeople?.length + filteredServices?.length,
-    }));
 
     setIsTableFiltered(true);
     reset();
@@ -288,10 +292,10 @@ export const FilterPopover = ({
               onClick={() => {
                 reset();
                 setFilteredWaitList(defaultState);
-                setContent("byservicename");
+                setContent("services");
               }}
               className={`w-full ${
-                content === "byservicename" ? "bg-[#E2E8F0]" : ""
+                content === "services" ? "bg-[#E2E8F0]" : ""
               } flex items-center gap-2 text-sm p-2 font-medium rounded-md`}
             >
               <AiOutlineAppstore />

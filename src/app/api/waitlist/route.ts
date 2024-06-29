@@ -10,6 +10,7 @@ export async function GET(request: Request) {
     const endDateString = searchParams.get("enddate");
     const firstName = searchParams.get("firstname");
     const serviceName = searchParams.get("servicename");
+    const services = searchParams.get("services");
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
@@ -53,11 +54,28 @@ export async function GET(request: Request) {
         );
         break;
 
-      case "byservicename":
-        data = data.filter((d) =>
+      case "services":
+        const serviceMap = new Map();
+
+        data.forEach((item) => {
+          const serviceNm = item.service.name;
+          if (!serviceMap.has(serviceNm)) {
+            serviceMap.set(serviceNm, item);
+          }
+        });
+
+        const allServices = Array.from(serviceMap.values());
+        data = allServices.filter((d) =>
           d.service.name
             .toLowerCase()
-            .includes(serviceName?.toLowerCase() as string)
+            .includes(services?.toLowerCase() as string)
+        );
+        break;
+
+      case "byservicename":
+        const sarr = services?.split(",").map((s) => s.toLowerCase()) ?? [];
+        data = data.filter((d) =>
+          sarr.some((service) => d.service.name.toLowerCase().includes(service))
         );
         break;
       default:

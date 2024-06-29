@@ -69,10 +69,12 @@ export const ServicesFilter = ({
                   <div className="flex items-center gap-2">
                     <input
                       type="checkbox"
-                      value={person.id}
+                      value={person.service.name}
                       {...register("selectedServices")}
                       className="accent-black cursor-pointer"
-                      checked={selectedServices.includes(person.id.toString())}
+                      checked={selectedServices.includes(
+                        person.service.name.toString()
+                      )}
                     />
                     {person.service.name}
                   </div>
